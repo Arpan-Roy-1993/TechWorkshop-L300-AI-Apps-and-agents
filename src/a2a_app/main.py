@@ -2,7 +2,7 @@ import os
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
-
+from opentelemetry.instrumentation.openai_v2 import OpenAIInstrumentor
 import httpx
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -10,9 +10,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from dotenv import load_dotenv
 
-from api.chat import router as chat_router
-from agent.a2a_server import A2AServer
-
+from .api.chat import router as chat_router
+from .agent.a2a_server import A2AServer
+OpenAIInstrumentor().instrument()
 # Load environment variables
 load_dotenv()
 
